@@ -8,8 +8,8 @@ import org.junit.jupiter.api.TestInstance
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class Test1 {
 
-    private val board = ArrayList<ArrayList<Char>>()
-    private val testBoard = ArrayList<ArrayList<Char>>()
+    private val board = Board()
+    private val testBoard = Board()
     private val boardSide = 20
 
     @BeforeAll
@@ -25,17 +25,17 @@ class Test1 {
     }
 
     private fun setTestBoard() {
-        setEmptyBoard(testBoard, boardSide)
-        setDefault(testBoard)
-        testBoard[6][4] = '*'
-        testBoard[6][6] = '*'
-        testBoard[7][5] = '*'
-        testBoard[7][6] = '*'
-        testBoard[8][5] = '*'
+        testBoard.setEmptyBoard(boardSide)
+        testBoard.setDefault()
+        testBoard.setCell(6,4,'*')
+        testBoard.setCell(6,6,'*')
+        testBoard.setCell(7,5,'*')
+        testBoard.setCell(7,6,'*')
+        testBoard.setCell(8,5,'*')
     }
 
     private fun setBoard() {
-        setEmptyBoard(board, boardSide)
-        setDefault(board)
+        board.setEmptyBoard(boardSide)
+        board.setDefault()
     }
 }
