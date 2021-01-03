@@ -9,33 +9,38 @@ import org.junit.jupiter.api.TestInstance
 class Test1 {
 
     private val board = Board()
-    private val testBoard = Board()
-    private val boardSide = 20
+    private val expected = Board()
 
     @BeforeAll
     fun setUp() {
         setTestBoard()
         setBoard()
-        live(board, 5)
+        run(board, 5, false)
     }
 
     @Test
     fun testAfterFiveLoops() {
-        assertTrue(checkBoard(board, testBoard))
+        assertTrue(board == expected)
     }
 
-    private fun setTestBoard() {
-        testBoard.setEmptyBoard(boardSide)
-        testBoard.setDefault()
-        testBoard.setCell(6,4,'*')
-        testBoard.setCell(6,6,'*')
-        testBoard.setCell(7,5,'*')
-        testBoard.setCell(7,6,'*')
-        testBoard.setCell(8,5,'*')
-    }
-
+    /**
+     * Creates a new board in its default state
+     */
     private fun setBoard() {
-        board.setEmptyBoard(boardSide)
+        board.setEmptyBoard()
         board.setDefault()
+    }
+
+    /**
+     * Sets the expected board state after 5 loops
+     */
+    private fun setTestBoard() {
+        expected.setEmptyBoard()
+        val panel = expected.panel
+        panel[7][5].revive()
+        panel[7][7].revive()
+        panel[8][6].revive()
+        panel[8][7].revive()
+        panel[9][6].revive()
     }
 }

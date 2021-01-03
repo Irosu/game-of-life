@@ -1,53 +1,65 @@
 package com.irosu.gameoflife
 
-//TODO: ¿crear un segundo panel en el que ir guardando los cambios?
 class Board {
 
-    val panelA = ArrayList<ArrayList<Char>>()
-    val panelB = ArrayList<ArrayList<Char>>()
+    val panel = ArrayList<ArrayList<Cell>>()
+    private val defaultSide = 20
 
     /**
      * Checks whether a cell is alive or not
      */
-    fun checkCell(x: Int, y: Int): Boolean {
-        return x >= 0 && x < panelA.size && y >= 0 && y < panelA[x].size && panelA[x][y] == '*'
-    }
-
-    fun getCell(x: Int, y: Int) = panelA[x][y]
-    fun setCell(x: Int, y: Int, value: Char) {
-        panelA[x][y] = value
-    }
+    fun checkCell(x: Int, y: Int) = x>=0 && x<panel.size && y>=0 && y<panel.size && panel[x][y].isAlive()
 
     /**
-     * Initialize our board with 8x8 size and '.' for every cell
+     * Initialize the board with the given (or default) size and full of dead cells
      */
-    fun setEmptyBoard(side: Int) {
+    fun setEmptyBoard(side: Int = defaultSide) {
         repeat((1..side).count()) {
-            val column = ArrayList<Char>()
-            repeat((1..side).count()) { column.add('.') }
-            panelA.add(column)
+            val column = ArrayList<Cell>()
+            repeat((1..side).count()) { column.add(Cell()) }
+            panel.add(column)
         }
     }
 
     /**
-     * Draws a default figure in our board
+     * Draws a default figure in the board
      */
     fun setDefault() {
-        panelA[5][5] = '*'
-        panelA[6][6] = '*'
-        panelA[7][4] = '*'
-        panelA[7][5] = '*'
-        panelA[7][6] = '*'
+        panel[5][5].revive()
+        panel[6][6].revive()
+        panel[7][4].revive()
+        panel[7][5].revive()
+        panel[7][6].revive()
     }
 
     /**
-     * Prints de board
+     * Prints the board
      */
     fun print() {
-        panelA.forEach { c ->
+        panel.forEach { c ->
             c.forEach { print("$it  ") }
             println()
         }
         println()
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if(other == null || other !is Board) return false
+        val panel2 = other.panel
+        if(panel2.size != panel.size) return false
+
+        for((r) in panel2.withIndex()) {
+            for((c) in panel2.withIndex()) {
+                if(panel2[r][c] != panel[r][c]) return false
+            }
+        }
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = panel.hashCode()
+        result = 31 * result + defaultSide
+        return result
     }
 }
