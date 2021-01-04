@@ -8,6 +8,7 @@ import org.junit.jupiter.api.TestInstance
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class Test1 {
 
+    private val mainLoop = MainLoop(5, false)
     private val board = Board()
     private val expected = Board()
 
@@ -15,7 +16,7 @@ class Test1 {
     fun setUp() {
         setTestBoard()
         setBoard()
-        run(board, 5, false)
+        mainLoop.run()
     }
 
     @Test

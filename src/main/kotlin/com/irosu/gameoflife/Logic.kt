@@ -10,7 +10,6 @@ package com.irosu.gameoflife
 fun setUp(board: Board) {
     board.setEmptyBoard()
     board.setDefault()
-    board.print()
 }
 
 /**
@@ -18,7 +17,7 @@ fun setUp(board: Board) {
  * 1. Any alive cell with less than two or more than three alive neighbours dies.
  * 2. Any dead cell with three alive neighbours revives.
  */
-fun prepareCells(board: Board, x: Int, y: Int) {
+fun prepareCell(board: Board, x: Int, y: Int) {
     val cell = board.panel[x][y]
     var aliveCells = 0
 

@@ -1,9 +1,11 @@
 package com.irosu.gameoflife
 
+import java.util.ArrayList
+
 class Board {
 
     val panel = ArrayList<ArrayList<Cell>>()
-    private val defaultSide = 20
+    private val defaultSide = 15
 
     /**
      * Checks whether a cell is alive or not
@@ -38,6 +40,7 @@ class Board {
     fun print() {
         panel.forEach { c ->
             c.forEach { print("$it  ") }
+            println()
             println()
         }
         println()

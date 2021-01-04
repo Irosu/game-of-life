@@ -8,6 +8,12 @@ class Cell {
     private var state: Boolean = false
     private var change: Boolean = false
 
+    private val esc = 27.toChar()
+    private val prefix = "$esc[48;2;"
+    private val postfix = "m   $esc[0m"
+    private val alive = "35;125;38"
+    private val dead = "36;32;28"
+
     /**
      * Prepares the cell to change its state in the next tick
      */
@@ -40,5 +46,5 @@ class Cell {
      */
     override fun equals(other: Any?) = other != null && other is Cell && (other.isAlive() == state)
     override fun hashCode() = state.hashCode()
-    override fun toString() = if(state) "*" else "."
+    override fun toString() = "$prefix${if(state) alive else dead}$postfix"
 }
